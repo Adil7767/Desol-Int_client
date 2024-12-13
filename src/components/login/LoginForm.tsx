@@ -66,7 +66,7 @@ export function LoginForm() {
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     setIsLoading(true);
     try {
-      const response: any = await apiRequest<any>({
+      const response = await apiRequest<any>({
         endpoint: "/auth/login",
         requiresToken: false,
         method: "post",
@@ -74,6 +74,7 @@ export function LoginForm() {
         contentType: "application/json",
       });
       if (response?.data) {
+        localStorage.setItem("token", response?.data?.token);
         document.cookie = `auth-token=${response?.data?.token}; path=/;`;
       }
       if (response.error) {

@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, Method } from 'axios';
+import axios from 'axios';
 import { removeToken } from './auth';
 
 const BASE_URL = 'https://desol-int-server.vercel.app';
@@ -13,14 +13,15 @@ export async function apiRequest<T>({
     requiresToken = false,
     method = 'post',
     data,
-    contentType = 'application/json' }: { endpoint: string, data?: Object, requiresToken?: boolean, contentType?: string, method: string }
+    contentType = 'application/json' }: { endpoint: string, data?: object, requiresToken?: boolean, contentType?: string, method: string }
 ): Promise<ApiResponse<T>> {
+
     const url = `${BASE_URL}${endpoint}`;
 
     const headers: Record<string, string> = {
         'Content-Type': contentType,
     };
-    
+
     if (requiresToken) {
         const token = document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1];
         if (token) {
