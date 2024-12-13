@@ -74,7 +74,7 @@ export function LoginForm() {
         contentType: "application/json",
       });
       if (response?.data) {
-        localStorage.setItem("token", response?.data?.token);
+        document.cookie = `auth-token=${response?.data?.token}; path=/;`;
       }
       if (response.error) {
         toast({

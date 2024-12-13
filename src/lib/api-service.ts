@@ -20,9 +20,9 @@ export async function apiRequest<T>({
     const headers: Record<string, string> = {
         'Content-Type': contentType,
     };
-
+    
     if (requiresToken) {
-        const token = localStorage.getItem('token');
+        const token = document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1];
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         } else {
